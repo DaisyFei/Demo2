@@ -1,11 +1,11 @@
     /**
      * fumeExperiment.js
      * Lin Fei
-     * 
+     *
      * Javascript file for Dynamic Moral Decision Experiment
      * Adapted from Gamble Experiment and Choice Experiment
      * note: this requires jQuery and JsPsych
-     * 
+     *
      **/
 
     /* jshint esversion: 6, loopfunc:true */
@@ -14,7 +14,7 @@
     * Variable declaration section
     * -----------------------------------------------------------------------------
     **/
-    
+
     var participantCode = "";
     var participantGender = "";
     var participantAge = "";
@@ -31,7 +31,7 @@
     var blockIndex = 0;
     var blockFin = 0;
 
-
+    window.onbeforeunload = null;
 
     // The timeline that the sections of the experiment is pushed on
     var tline = [];
@@ -51,7 +51,7 @@
 //           return results[1] || 0;
 //        }
 //    }
-    
+
 
 // warn users before they try to leave the page if the experiment has not been completed
     window.onbeforeunload = function (event) {
@@ -72,10 +72,10 @@
             doNotClose = true;
             // start the experiment timer
             start = new Date();
-        }       
+        }
     };
     tline.push(full_screen);
-    
+
     //Eliciting MTurk ID
     var participation_code = {
         type: "survey-text",
@@ -85,15 +85,15 @@
             participantCode = responses.Q0;
         }
     }
-    
-    
+
+
     var gender_block = {
         type: "survey-multi-choice",
         questions: [{prompt:'<p style="margin-left: 20%; margin-right: 20%; text-align:left;">What is your gender?',options: ["Male", "Female", "Prefer not to say"],required:true}],
         on_finish: function (data) {
             var responses = JSON.parse(data.responses);
             participantGender = responses.Q0;
-        }  
+        }
     };
 
     var age_block = {
@@ -113,7 +113,7 @@
             firstLang = responses.Q0.substr(0,2);
         }
     };
-    
+
     tline.push(participation_code);
     tline.push(gender_block);
     tline.push(age_block);
@@ -144,13 +144,13 @@
     tline.push(inst1);
     tline.push(inst2);
     tline.push(inst3);
-    
 
-   var randomCode = 100000 + Math.floor(Math.random() * 99999);   
+
+   var randomCode = 100000 + Math.floor(Math.random() * 99999);
 
 //        //////////////////////
 //        ///Read in the file///
-//        ////////////////////// 
+//        //////////////////////
 //
 //        // Holds all of the data
 //        var dataSet;
@@ -179,7 +179,7 @@
 //            }
 //
 //        };
-//        
+//
 //        var fileRoute = "trials.csv";
 //
 //        // Sends the request for the data of filename.format
@@ -205,13 +205,13 @@
                 max = radius[i]
         }
         console.log(max);
- 
+
         //////////////////////
         ///       End      ///
-        ////////////////////// 
+        //////////////////////
 
 
-    /////////// 
+    ///////////
     ///MAIN////
     ///////////
 
@@ -251,7 +251,7 @@
         timeline: trials //the subtimeline
      }
      tline.push(trial2);
-    
+
  //trial3: display ending message
    var trial3 = {
        type: 'html-keyboard-response-circles',
@@ -262,7 +262,7 @@
    };
 
    tline.push(trial3);
-    
+
 
 //Demographics
 
@@ -282,7 +282,7 @@
             saveExperiment(true);
         }
     }
-    
+
     var problems = {
         type: "survey-multi-choice-other",
         questions: [{prompt:"Did you experience any technical difficulty?",options: ["No"],
@@ -293,7 +293,7 @@
             saveExperiment(true);
         }
     }
-    
+
     var comment = {
         type: "survey-text",
         questions:[{prompt: '<p style="margin-left: 20%; margin-right: 20%; text-align:left;">Did you find anything in this HIT confusing? We appreciate anything you care to share. ', rows: 10, columns: 60}],
@@ -313,8 +313,8 @@
             device = responses.Q0;
             saveExperiment(true);
         }
-    }    
-    
+    }
+
     var similar = {
         type: "survey-multi-choice-other",
         questions: [{prompt:"Have you completed any similar studies recently?",options: ["No"],
@@ -323,7 +323,7 @@
             var responses = JSON.parse(data.responses);
             similar = responses.Q0;
         }
-    }    
+    }
 
     tline.push(inst4);
     tline.push(strategy);
@@ -346,10 +346,10 @@
       });
 
     /**
-     * 
+     *
      * Helper Functions
      * -----------------------------------------------------------------------------------
-     * 
+     *
      **/
 
 
@@ -363,7 +363,7 @@
             return Math.random() >= 0.5;
         }
     }
-    
+
 
     // This function is implemented based on suggestions by StackOverflow users to use the Durstenfeld shuffle
     // forums: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -376,7 +376,7 @@
         }
     }
 
-    
+
     function getCurrentDate() {
         var currentdate = new Date();
         var datetime = currentdate.getDate() + "_" +
@@ -423,12 +423,12 @@
         }
 
         // call the php script to save the data
-        saveData(saveName + ".csv", csvData);           
+        saveData(saveName + ".csv", csvData);
     }
 
     // this function based on code suggested by StackOverflow users:
     // http://stackoverflow.com/users/64741/zachary
-    // http://stackoverflow.com/users/317/joseph-sturtevant     
+    // http://stackoverflow.com/users/317/joseph-sturtevant
     function JSON2CSV(objArray) {
         var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
         var line = '';
@@ -448,7 +448,7 @@
         result += '"Date","' + getCurrentDate() + '"\r\n';
         result += '"Total ExperimentTime","' + timing + '"\r\n';
         result += '"Final Size","' +circle_info[1]+'"\r\n';
-        result += '"Trial Num","' +circle_info[0]+'"\r\n';   
+        result += '"Trial Num","' +circle_info[0]+'"\r\n';
         result += '"Strategy","' +strategy +'"\r\n';
         result += '"Problems","' +problems +'"\r\n';
         result += '"Comment","' +comment +'"\r\n';
@@ -485,13 +485,13 @@
 
     function getDesiredData(allData){
 
-        // Stores all the rows to record, each row is its own array within this array        
+        // Stores all the rows to record, each row is its own array within this array
         var desiredData = [];
         var desiredDataIndex = 0;
 
 
         for (var i = 0; i < allData.length; ++i) {
-            if (allData[i].trial_type == "html-keyboard-response-circles") {   
+            if (allData[i].trial_type == "html-keyboard-response-circles") {
                 desiredData[desiredDataIndex] = {
                     "TrialNum" : allData[i].TrialNum,
                     "BlockNum" : allData[i].BlockNum,
@@ -507,7 +507,7 @@
 //        console.log(desiredData);
         return desiredData;
     }
-    
+
     function booleanToData(bool){
         if(bool){
             return 1;
@@ -524,8 +524,8 @@
         } else {
             return -1;
         }
-    }    
-    
+    }
+
     function randomizeArray(arr){
         temp =  '';
         if(Math.random()>= 0.5){
@@ -537,7 +537,7 @@
     }
     function updateCircleNumber(arr){
       circle_info = arr;
-    }   
+    }
 
     function indexOfMax(arr) {
         if (arr.length === 0) {
@@ -557,7 +557,7 @@
         return maxIndex;
     }
 
-    function getMax(arr){ 
+    function getMax(arr){
         var max = arr[0]
         for(var i = 0; i < arr.length; i++){
             if(arr[i] > max)
