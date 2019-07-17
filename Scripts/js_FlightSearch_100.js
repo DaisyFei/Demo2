@@ -168,7 +168,7 @@
       var total = 100;
       var radius = [];
       for (var r = 0; r < total;r++){
-          radius.push(Math.round(Math.random()*1700)+200);
+          radius.push((Math.round((Math.random()*2443)+13+(Math.random()*2443)+12))*50);
       }
       shuffle(radius);
         var min = radius[0]
@@ -192,12 +192,19 @@
      //all of the circle trials (setting up the subtimeline)
       var trials = []
       for (var i = 0; i< total; i++){
+        if(i%2 == 0){
+          var stimuli = '<font size = 100px; color = #000000>'+radius[i]+' points</font>';
+        }
+        else {
+          var stimuli = '<font size = 100px; color = #760808>'+radius[i]+' points</font>';
+        }
           trials.push({
-            stimulus: '<br><img src="images/Flight.png" style="width:800px;"><p style="margin: 0; position: absolute; top: 50%; left: 70%; transform: translate(-50%, -50%);"><b><font color = "red">$'+radius[i]+'</font></b></p>',
+            stimulus: '<p style="margin: 0; position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);"><b>'+stimuli+' </b></p>',
             circle_number: i + 1,
             circle_size: radius[i]
           });
       }
+
 
     var trialNum = 0;
 
@@ -206,7 +213,7 @@
      var trial2 = {
          type: 'html-keyboard-response-circles',
          choices: ['y', 'n'],
-         prompt: '<p style="margin: 0; position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);">Press Y, if you want to take it. You won\'t see any more ticket prices.<br>Press N, if you want to leave it. You will move on to the next ticket.</p>',
+         prompt: '<p style="margin: 0; position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);">Press Y, if you want to take it. You won\'t see any more ticket price in points.<br>Press N, if you want to leave it. You will move on to the next ticket.</p>',
          on_finish: function(data) {
           if (data.key_press == 89) {
             jsPsych.endCurrentTimeline();
@@ -300,8 +307,8 @@
         fullscreen: true,
         on_finish: function (data) {
             saveExperiment(false);
-            var budgetLeft = 2000-circle_info[1];
-           $("body").append('<p style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"> You saved $'+ budgetLeft + ', which represents '+Math.round(budgetLeft/100)+' cents. <br><br> Thank you very much for participating! <b>Please enter the following code back to the Qualtrics page: <font color = "red">FYAP'+randomCode+'.</p></b></font>');
+            var budgetLeft = 245550-circle_info[1];
+           $("body").append('<p style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"> You saved '+ budgetLeft + ' points, which represents '+Math.round(budgetLeft/20000)+' cents. <br><br> Thank you very much for participating! <b>Please enter the following code back to the Qualtrics page: <font color = "red">FYAP'+randomCode+'.</p></b></font>');
             doNotClose = false;
          }
       });
