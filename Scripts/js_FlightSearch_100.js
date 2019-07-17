@@ -193,10 +193,10 @@
       var trials = []
       for (var i = 0; i< total; i++){
         if(i%2 == 0){
-          var stimuli = '<font size = 100px; color = #000000>'+radius[i]+' points</font>';
+          var stimuli = '<font size = 100px; color = #000000>'+numberWithCommas(radius[i])+' points</font>';
         }
         else {
-          var stimuli = '<font size = 100px; color = #760808>'+radius[i]+' points</font>';
+          var stimuli = '<font size = 100px; color = #760808>'+numberWithCommas(radius[i])+' points</font>';
         }
           trials.push({
             stimulus: '<p style="margin: 0; position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);"><b>'+stimuli+' </b></p>',
@@ -369,6 +369,10 @@
             url: 'save_data.php', // this is the path to the PHP script
             data: { filename: filename, filedata: filedata }
         });
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
    function saveExperiment(partial){
