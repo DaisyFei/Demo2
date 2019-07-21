@@ -199,7 +199,7 @@
           var stimuli = '<font size = 100px; color = #760808>'+numberWithCommas(radius[i])+' points</font>';
         }
           trials.push({
-            stimulus: '<p style="margin: 0; position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);"><b>'+stimuli+' </b></p>',
+            stimulus: '<p style="margin: 0; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);"><b>'+stimuli+' </b></p>',
             circle_number: i + 1,
             circle_size: radius[i]
           });
