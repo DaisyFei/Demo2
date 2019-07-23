@@ -193,15 +193,15 @@
       var trials = []
       for (var i = 0; i< total; i++){
         if(i%2 == 0){
-          var stimuli = '<font size = 100px; color = #000000>'+numberWithCommas(radius[i])+' points</font>';
+          var stimuli = '<font family: Verdana; size = 70px; color = #000000>'+numberWithCommas(radius[i])+' </font><br><br>points';
         }
         else {
-          var stimuli = '<font size = 100px; color = #760808>'+numberWithCommas(radius[i])+' points</font>';
+          var stimuli = '<font family: Verdana; size = 70px; color = #808080>'+numberWithCommas(radius[i])+' </font><br><br>points';
         }
           trials.push({
-            stimulus: '<p style="margin: 0; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);"><b>'+stimuli+' </b></p>',
             circle_number: i + 1,
-            circle_size: radius[i]
+            circle_size: radius[i],
+            stimulus: '<p style="margin: 0; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);"><b>'+stimuli+'</b><p style="margin: 0; position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%);">trial '+(i+1)+'/100</p>'
           });
       }
 
@@ -213,7 +213,7 @@
      var trial2 = {
          type: 'html-keyboard-response-circles',
          choices: ['y', 'n'],
-         prompt: '<p style="margin: 0; position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);">Press Y, if you want to take it. You won\'t see any more ticket price in points.<br>Press N, if you want to leave it. You will move on to the next ticket.</p>',
+         prompt: '<p style="margin: 0; position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);">Press Y, if you want to take it. You won\'t see any more tickets.<br>Press N, if you want to leave it. You will move on to the next ticket.</p>',
          on_finish: function(data) {
           if (data.key_press == 89) {
             jsPsych.endCurrentTimeline();
