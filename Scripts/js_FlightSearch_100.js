@@ -193,15 +193,15 @@
       var trials = []
       for (var i = 0; i< total; i++){
         if(i%2 == 0){
-          var stimuli = '<font family: Verdana; size = 70px; color = #000000>'+numberWithCommas(radius[i])+' </font><br><br>points';
+          var stimuli = '<font family: Verdana; size = 70px; color = #000000>'+numberWithCommas(radius[i])+' </font><br><br><font family: Verdana; color = #000000> points </font>';
         }
         else {
-          var stimuli = '<font family: Verdana; size = 70px; color = #808080>'+numberWithCommas(radius[i])+' </font><br><br>points';
+          var stimuli = '<font family: Verdana; size = 70px; color = #707070>'+numberWithCommas(radius[i])+' </font><br><br><font family: Verdana; color = #707070>points</font>';
         }
           trials.push({
             circle_number: i + 1,
             circle_size: radius[i],
-            stimulus: '<p style="margin: 0; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);"><b>'+stimuli+'</b><p style="margin: 0; position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%);">trial '+(i+1)+'/100</p>'
+            stimulus: '<p style="margin: 0; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);"><b>'+stimuli+'</b><p style="margin: 0; position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%);">'+(i+1)+'/100</p>'
           });
       }
 
@@ -215,9 +215,9 @@
          choices: ['y', 'n'],
          prompt: '<p style="margin: 0; position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);">Press Y, if you want to take it. You won\'t see any more tickets.<br>Press N, if you want to leave it. You will move on to the next ticket.</p>',
          on_finish: function(data) {
+          updateCircleNumber([this.circle_number, this.circle_size]);
           if (data.key_press == 89) {
             jsPsych.endCurrentTimeline();
-            updateCircleNumber([this.circle_number, this.circle_size]);
           }
           saveExperiment(true);
         },
@@ -308,7 +308,7 @@
         on_finish: function (data) {
             saveExperiment(false);
             var budgetLeft = 245550-circle_info[1];
-           $("body").append('<p style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"> You saved '+ budgetLeft + ' points, which represents '+Math.round(budgetLeft/20000)+' cents. <br><br> Thank you very much for participating! <b>Please enter the following code back to the Qualtrics page: <font color = "red">FYAP'+randomCode+'.</p></b></font>');
+           $("body").append('<p style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"> You saved '+ budgetLeft + ' points, which represents '+Math.round(budgetLeft/20000)+' cents. <br><br> Thank you very much for participating! <b>Please enter the following temporary code back to the Qualtrics page: <font color = "red">FYAP'+randomCode+'.</p></b></font>');
             doNotClose = false;
          }
       });
