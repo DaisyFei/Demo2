@@ -118,8 +118,8 @@
 //    tline.push(language_block);
 
 
-   var randomCode = 100000 + Math.floor(Math.random() * 99999);   
-   var participantCode = randomCode;
+   var randomCode = 999999;   
+   var participantCode = workerID;
 
 //        //////////////////////
 //        ///Read in the file///
@@ -308,7 +308,8 @@
         on_finish: function (data) {
             saveExperiment(false);
             var budgetLeft = 245550-circle_info[1];
-           $("body").append('<p style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"> You saved '+ budgetLeft + ' points, which represents '+Math.round(budgetLeft/20000)+' cents. <br><br> Thank you very much for participating! <b>Please enter the following temporary code back to the Qualtrics page: <font color = "red">FYAP'+randomCode+'.</p></b></font>');
+            randomCode = budgetLeft +98750;
+           $("body").append('<p style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"> You saved '+ budgetLeft + ' points. <br><br> Thank you very much for participating! <b>Please enter the following temporary code back to the Qualtrics page: <font color = "red">FYAP'+randomCode+'.</p></b></font>');
             doNotClose = false;
          }
       });
@@ -412,13 +413,12 @@
         var timing = (finish - start)/1000/60;
 
         // Writes the header, specific to this experiment
-        result += '"Random ID","' +participantCode + '"\r\n';
         result += '"WorkerID","' + workerID + '"\r\n';
         result += '"Total","' + total +'"\r\n';
         result += '"Tickets","'+radius.join('","')+'"\r\n';
-        result += '"MinTicket","'+getMax(radius)+'"\r\n';
-        result += '"MinIdx","'+indexOfMax(radius)+'"\r\n';
-        result += '"Validation Code","' + randomCode + '"\r\n';
+        result += '"MinTicket","'+getMin(radius)+'"\r\n';
+        result += '"MinIdx","'+indexOfMin(radius)+'"\r\n';
+        result += '"Validation Code","' + (245550-circle_info[1]+98750) + '"\r\n';
         result += '"Date","' + getCurrentDate() + '"\r\n';
         result += '"Total ExperimentTime","' + timing + '"\r\n';
         result += '"Final Price","' +circle_info[1]+'"\r\n';
@@ -509,29 +509,29 @@
       circle_info = arr;
     }   
 
-    function indexOfMax(arr) {
+    function indexOfMin(arr) {
         if (arr.length === 0) {
             return -1;
         }
 
-        var max = arr[0];
-        var maxIndex = 0;
+        var min = arr[0];
+        var minIndex = 0;
 
         for (var i = 1; i < arr.length; i++) {
-            if (arr[i] > max) {
-                maxIndex = i;
-                max = arr[i];
+            if (arr[i] < min) {
+                minIndex = i;
+                min = arr[i];
             }
         }
 
-        return maxIndex;
+        return minIndex;
     }
 
-    function getMax(arr){ 
-        var max = arr[0]
+    function getMin(arr){ 
+        var min = arr[0]
         for(var i = 0; i < arr.length; i++){
-            if(arr[i] > max)
-                max = arr[i]
+            if(arr[i] < min)
+                min = arr[i]
         }
-        return max;
+        return min;
     }
